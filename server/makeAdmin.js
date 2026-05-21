@@ -12,7 +12,7 @@ require('dotenv').config();
       { isAdmin: true }, 
       { new: true }
     );
-    //Password456
+    //Password456   AAAAA9999A
     console.log('User updated to admin:', result);
     process.exit(0);
   } catch (error) {

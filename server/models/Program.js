@@ -8,7 +8,7 @@ const ProgramSchema = new mongoose.Schema({
   description: String,
   category: {
     type: String,
-    enum: ['Weight Training', 'Cardio Training', 'Personal Training', 'Yoga', 'Zumba', 'Wrestling', 'Pullups', 'Weightlifting', 'Armwrestling'],
+    enum: ['Weight Training', 'Cardio Training', 'Personal Training', 'Yoga', 'Zumba', 'Wrestling', 'Pullups', 'Weightlifting', 'Armwrestling','other'],
   },
   image: String,
   duration: String,

@@ -1,8 +1,8 @@
-﻿const Trainer = require('../models/Trainer');
+const Trainer = require('../models/Trainer');
 
 const getAllTrainers = async (req, res) => {
   try {
-    const trainers = await Trainer.find().populate('programs');
+    const trainers = await Trainer.find();
     res.json(trainers);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -11,7 +11,7 @@ const getAllTrainers = async (req, res) => {
 
 const getTrainerById = async (req, res) => {
   try {
-    const trainer = await Trainer.findById(req.params.id).populate('programs');
+    const trainer = await Trainer.findById(req.params.id);
     if (!trainer) return res.status(404).json({ message: 'Trainer not found' });
     res.json(trainer);
   } catch (error) {
@@ -55,3 +55,4 @@ module.exports = {
   updateTrainer,
   deleteTrainer,
 };
+

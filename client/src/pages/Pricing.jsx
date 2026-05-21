@@ -50,11 +50,18 @@
 // };
 
 // export default Pricing;
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { pricingAPI } from "../utils/api";
+import { AuthContext } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import BookingForm from "../components/BookingForm";
 
 const Pricing = () => {
   const [plans, setPlans] = useState([]);
+  const [selectedPlan, setSelectedPlan] = useState(null);
+  const [showBookingForm, setShowBookingForm] = useState(false);
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPricing = async () => {
@@ -68,10 +75,24 @@ const Pricing = () => {
     fetchPricing();
   }, []);
 
+  const handleBuyNow = (plan) => {
+    if (!user) {
+      navigate("/login");
+      return;
+    }
+    setSelectedPlan(plan);
+    setShowBookingForm(true);
+  };
+
+  const handleBookingSuccess = (booking) => {
+    alert("Booking completed successfully! Payment received.");
+    // Refresh or redirect
+    window.location.reload();
+  };
+
   return (
     <div className="min-h-screen bg-dark py-20">
       <div className="max-w-7xl mx-auto px-4">
-
         <h1 className="text-5xl font-bold text-center mb-6">
           <span className="gradient-text">Our Pricing Plans</span>
         </h1>
@@ -81,7 +102,6 @@ const Pricing = () => {
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-
           {plans.length > 0 ? (
             plans.map((plan) => (
               <div
@@ -109,7 +129,10 @@ const Pricing = () => {
                 </p>
 
                 {/* BUTTON */}
-                <button className="btn-neon w-full">
+                <button
+                  onClick={() => handleBuyNow(plan)}
+                  className="btn-neon w-full"
+                >
                   Buy Now
                 </button>
               </div>
@@ -119,9 +142,17 @@ const Pricing = () => {
               Loading plans...
             </div>
           )}
-
         </div>
       </div>
+
+      {/* Booking Form Modal */}
+      {showBookingForm && selectedPlan && (
+        <BookingForm
+          plan={selectedPlan}
+          onClose={() => setShowBookingForm(false)}
+          onSuccess={handleBookingSuccess}
+        />
+      )}
     </div>
   );
 };

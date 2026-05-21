@@ -43,6 +43,7 @@ export const authAPI = {
   login: (data) => api.post("/auth/login", data),
   getProfile: () => api.get("/auth/profile"),
   updateProfile: (data) => api.put("/auth/profile", data),
+  getAllUsers: () => api.get("/auth/users"), // <-- Ye line add karo
 };
 
 export const programAPI = {

@@ -2,6 +2,7 @@
 import { AuthProvider } from "./context/AuthContext";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import WhatsappFloat from './components/WhatsappFloat';
 import AddProgram from "./pages/AddProgram";
 import AddPricing from "./pages/AddPricing";
 // Pages
@@ -15,6 +16,7 @@ import Tips from "./pages/Tips";
 import Contact from "./pages/Contact";
 import Login from "./pages/Auth/Login";
 import Signup from "./pages/Auth/Signup";
+
 
 // Admin
 import AdminDashboard from "./admin/AdminDashboard";
@@ -45,6 +47,7 @@ function App() {
           </Routes>
         </main>
         <Footer />
+        <WhatsappFloat />
       </AuthProvider>
     </Router>
   );

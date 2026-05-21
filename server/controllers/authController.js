@@ -129,4 +129,18 @@ const updateProfile = async (req, res) => {
   }
 };
 
-module.exports = { signup, login, getProfile, updateProfile };
+// Is file ke bottom mein existing exports se theek pehle ye function add karo:
+const getAllUsers = async (req, res) => {
+  try {
+    // '-password' se user ka password select nahi hoga, jo ki security ke liye zaroori hai
+    const users = await User.find().select('-password');
+    res.status(200).json(users);
+  } catch (error) {
+    console.error('Get all users error:', error);
+    res.status(500).json({ message: error.message || 'Failed to fetch users' });
+  }
+};
+
+// module.exports ko update karke getAllUsers ko add karo:
+module.exports = { signup, login, getProfile, updateProfile, getAllUsers };
+

@@ -11,6 +11,7 @@ const BookingSchema = new mongoose.Schema({
     ref: 'Pricing',
     required: true,
   },
+  bio: String,
   slots: {
     monday: { type: Boolean, default: false },
     tuesday: { type: Boolean, default: false },
@@ -22,13 +23,14 @@ const BookingSchema = new mongoose.Schema({
   },
   startDate: Date,
   endDate: Date,
+  amount: Number,
   paymentStatus: {
     type: String,
     enum: ['pending', 'completed', 'failed'],
     default: 'pending',
   },
   transactionId: String,
-  amount: Number,
+  razorpayOrderId: String,
   createdAt: {
     type: Date,
     default: Date.now,

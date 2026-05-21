@@ -20,6 +20,7 @@ const trainerRoutes = require('./routes/trainerRoutes');
 const bookingRoutes = require('./routes/bookingRoutes');
 const contactRoutes = require('./routes/contactRoutes');
 const pricingRoutes = require('./routes/pricingRoutes');
+const settingRoutes = require('./routes/settingRoutes');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/programs', programRoutes);
@@ -28,7 +29,7 @@ app.use('/api/trainers', trainerRoutes);
 app.use('/api/bookings', bookingRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/pricing', pricingRoutes);
-
+app.use('/api/settings', settingRoutes);
 
 app.get('/api/health', (req, res) => {
   res.json({ message: 'Server is running 🚀' });
