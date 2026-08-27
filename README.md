@@ -5,13 +5,12 @@ A **production-level, fully responsive fitness website** built with MongoDB, Exp
 ## 🎨 Features Implemented
 ### Project Screenshots
 
-![Screenshot 1](./client/ASSETS/Screenshot%20(592).png)
-
-![Screenshot 2](./client/ASSETS/Screenshot%20(595).png)
-
-![Screenshot 3](./client/ASSETS/Screenshot%20(596).png)
-
-![Screenshot 4](./client/ASSETS/Screenshot%20(603).png)
+<div align="center">
+  <img src="./client/ASSETS/Screenshot%20(592).png" width="400" alt="Screenshot 1"/>
+  <img src="./client/ASSETS/Screenshot%20(595).png" width="400" alt="Screenshot 2"/>
+  <img src="./client/ASSETS/Screenshot%20(596).png" width="400" alt="Screenshot 3"/>
+  <img src="./client/ASSETS/Screenshot%20(603).png" width="400" alt="Screenshot 4"/>
+</div>
 ### Frontend (React + Vite + Tailwind CSS)
 - ✅ Responsive navigation bar with hamburger menu
 - ✅ Home page with hero section, features, stats, testimonials preview
