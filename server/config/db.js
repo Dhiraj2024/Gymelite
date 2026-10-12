@@ -1,14 +1,32 @@
 ﻿require('dotenv').config();
 const mongoose = require('mongoose');
 
+let connectionPromise;
+
 const connectDB = async () => {
-  try {
-    await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/gyme');
-    console.log('✅ MongoDB connected successfully');
-  } catch (error) {
-    console.error('❌ MongoDB connection failed:', error);
-    process.exit(1);
+  if (mongoose.connection.readyState === 1) {
+    return mongoose.connection;
   }
+
+  const mongoUri = process.env.MONGODB_URI;
+  if (!mongoUri) {
+    throw new Error('MONGODB_URI must be configured');
+  }
+
+  if (!connectionPromise) {
+    connectionPromise = mongoose.connect(mongoUri)
+      .then(() => {
+        console.log('✅ MongoDB connected successfully');
+        return mongoose.connection;
+      })
+      .catch((error) => {
+        connectionPromise = undefined;
+        console.error('❌ MongoDB connection failed:', error);
+        throw error;
+      });
+  }
+
+  return connectionPromise;
 };
 
 module.exports = connectDB;

@@ -32,7 +32,7 @@ const signup = async (req, res) => {
 
     const token = jwt.sign(
       { id: user._id, email: user.email, isAdmin: user.isAdmin },
-      process.env.JWT_SECRET || 'gym-secret-key',
+      process.env.JWT_SECRET,
       { expiresIn: '7d' }
     );
 
@@ -75,7 +75,7 @@ const login = async (req, res) => {
 
     const token = jwt.sign(
       { id: user._id, email: user.email, isAdmin: user.isAdmin },
-      process.env.JWT_SECRET || 'gym-secret-key',
+      process.env.JWT_SECRET,
       { expiresIn: '7d' }
     );
 
@@ -143,4 +143,3 @@ const getAllUsers = async (req, res) => {
 
 // module.exports ko update karke getAllUsers ko add karo:
 module.exports = { signup, login, getProfile, updateProfile, getAllUsers };
-
