@@ -1,22 +1,47 @@
-﻿const mongoose = require('mongoose');
-const User = require('./models/User');
+﻿
+const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
+const User = require("./models/User");
+require("dotenv").config();
 
-require('dotenv').config();
-
-(async () => {
+async function createAdmin() {
   try {
-    await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/gyme');
-    
-    const result = await User.findOneAndUpdate(
-      { email: 'jane@example.com' },
-      { isAdmin: true }, 
-      { new: true }
-    );
-    //Password456   AAAAA9999A
-    console.log('User updated to admin:', result);
-    process.exit(0);
+    await mongoose.connect(process.env.MONGODB_URI);
+
+    const adminEmail = "admin@gyme.com";
+    const adminPassword = "GymAdmin@2026";
+
+    // Check whether admin already exists
+    const existingAdmin = await User.findOne({
+      email: adminEmail,
+    });
+
+    if (existingAdmin) {
+      console.log("Admin account already exists.");
+      console.log("Email:", adminEmail);
+      return;
+    }
+
+    // Create a separate admin account
+    const admin = new User({
+      name: "Gym Admin",
+      email: adminEmail,
+      password: adminPassword,
+      isAdmin: true,
+    });
+
+    // User model automatically hashes the password
+    await admin.save();
+
+    console.log("New admin account created successfully!");
+    console.log("Email:", adminEmail);
+    console.log("Password:", adminPassword);
+    console.log("isAdmin:", admin.isAdmin);
   } catch (error) {
-    console.error('Error:', error.message);
-    process.exit(1);
+    console.error("Error creating admin:", error.message);
+  } finally {
+    await mongoose.disconnect();
   }
-})();
+}
+
+createAdmin();

@@ -1,4 +1,4 @@
-﻿import { useState, useContext } from "react";
+import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { AuthContext } from "../context/AuthContext";
@@ -29,6 +29,7 @@ const Navbar = () => {
     { name: "PRICING", path: "/pricing" },
     { name: "TIPS", path: "/tips" },
     { name: "CONTACT", path: "/contact" },
+    { name: "📍", path: "/location" },
   ];
 
   return (
@@ -37,7 +38,7 @@ const Navbar = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 group flex-shrink-0">
-            <span className="text-3xl">⚡</span>
+            <span className="text-3xl"></span>
             <span className="text-xl sm:text-2xl font-black neon-text">GYME</span>
           </Link>
 

@@ -1,16 +1,37 @@
-﻿import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from "react-icons/fa";
+import { useState, useEffect } from "react";
+import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const Footer = () => {
+  const [mapAddress, setMapAddress] = useState("");
+  const [loading, setLoading] = useState(true);
   const currentYear = new Date().getFullYear();
+
+  useEffect(() => {
+    fetchAddress();
+  }, []);
+
+  const fetchAddress = async () => {
+    try {
+      setLoading(true);
+      const res = await axios.get("http://localhost:5000/api/settings/address");
+      setMapAddress(res.data.address);
+    } catch (error) {
+      console.error("Error fetching address:", error);
+      setMapAddress("123 Fitness Street, Gym City, GC 12345"); // Default fallback
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <footer className="bg-dark-secondary border-t border-primary/20 mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-8 mb-8">
           {/* Brand */}
           <div>
-            <h3 className="text-2xl font-bold neon-text mb-4">⚡GYME</h3>
+            <h3 className="text-2xl font-bold neon-text mb-4">?GYME</h3>
             <p className="text-gray-400 text-sm">
               Transform your body and elevate your spirit with our premium fitness programs.
             </p>
@@ -20,10 +41,26 @@ const Footer = () => {
           <div>
             <h4 className="text-primary font-bold mb-4">Quick Links</h4>
             <ul className="space-y-2 text-sm text-gray-400">
-              <li><Link to="/" className="hover:text-primary transition">Home</Link></li>
-              <li><Link to="/programs" className="hover:text-primary transition">Programs</Link></li>
-              <li><Link to="/trainers" className="hover:text-primary transition">Trainers</Link></li>
-              <li><Link to="/pricing" className="hover:text-primary transition">Pricing</Link></li>
+              <li>
+                <Link to="/" className="hover:text-primary transition">
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link to="/programs" className="hover:text-primary transition">
+                  Programs
+                </Link>
+              </li>
+              <li>
+                <Link to="/trainers" className="hover:text-primary transition">
+                  Trainers
+                </Link>
+              </li>
+              <li>
+                <Link to="/pricing" className="hover:text-primary transition">
+                  Pricing
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -31,20 +68,70 @@ const Footer = () => {
           <div>
             <h4 className="text-primary font-bold mb-4">Resources</h4>
             <ul className="space-y-2 text-sm text-gray-400">
-              <li><Link to="/tips" className="hover:text-primary transition">Tips</Link></li>
-              <li><Link to="/about" className="hover:text-primary transition">About</Link></li>
-              <li><Link to="/contact" className="hover:text-primary transition">Contact</Link></li>
+              <li>
+                <Link to="/tips" className="hover:text-primary transition">
+                  Tips
+                </Link>
+              </li>
+              <li>
+                <Link to="/about" className="hover:text-primary transition">
+                  About
+                </Link>
+              </li>
+              <li>
+                <Link to="/contact" className="hover:text-primary transition">
+                  Contact
+                </Link>
+              </li>
             </ul>
+          </div>
+
+          {/* Map Location */}
+          <div>
+            <h4 className="text-primary font-bold mb-4">?? Our Location</h4>
+            {loading ? (
+              <p className="text-xs text-gray-500">Loading...</p>
+            ) : (
+              <>
+                <p className="text-gray-400 text-sm mb-3">{mapAddress}</p>
+                <Link
+                  to="/location"
+                  className="text-xs bg-primary/20 text-primary px-3 py-1.5 rounded hover:bg-primary/30 transition inline-block"
+                >
+                  View Map ?
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Social */}
           <div>
             <h4 className="text-primary font-bold mb-4">Follow Us</h4>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-primary transition"><FaFacebook size={20} /></a>
-              <a href="#" className="text-gray-400 hover:text-primary transition"><FaTwitter size={20} /></a>
-              <a href="#" className="text-gray-400 hover:text-primary transition"><FaInstagram size={20} /></a>
-              <a href="#" className="text-gray-400 hover:text-primary transition"><FaLinkedin size={20} /></a>
+              <a
+                href="#"
+                className="text-gray-400 hover:text-primary transition"
+              >
+                <FaFacebook size={20} />
+              </a>
+              <a
+                href="#"
+                className="text-gray-400 hover:text-primary transition"
+              >
+                <FaTwitter size={20} />
+              </a>
+              <a
+                href="#"
+                className="text-gray-400 hover:text-primary transition"
+              >
+                <FaInstagram size={20} />
+              </a>
+              <a
+                href="#"
+                className="text-gray-400 hover:text-primary transition"
+              >
+                <FaLinkedin size={20} />
+              </a>
             </div>
           </div>
         </div>
@@ -52,11 +139,15 @@ const Footer = () => {
         <div className="border-t border-gray-700 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-400 text-sm">
-              © {currentYear} GYME Fitness. All rights reserved.
+              � {currentYear} GYME Fitness. All rights reserved.
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0 text-sm text-gray-400">
-              <a href="#" className="hover:text-primary transition">Privacy Policy</a>
-              <a href="#" className="hover:text-primary transition">Terms of Service</a>
+              <a href="#" className="hover:text-primary transition">
+                Privacy Policy
+              </a>
+              <a href="#" className="hover:text-primary transition">
+                Terms of Service
+              </a>
             </div>
           </div>
         </div>

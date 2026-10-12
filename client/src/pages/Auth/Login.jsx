@@ -21,8 +21,6 @@ const Login = () => {
     
     if (!formData.password) {
       errors.password = "Password is required";
-    } else if (formData.password.length < 6) {
-      errors.password = "Password must be at least 6 characters";
     }
     
     setValidationErrors(errors);
@@ -75,7 +73,7 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-dark flex items-center justify-center px-4 py-8">
+    <div className="min-h-screen bg-dark flex items-start md:items-center justify-center px-4 pt-12 pb-8">
       <div className="max-w-md w-full">
         <div className="glass-effect p-8 rounded-lg">
           <h1 className="text-3xl font-bold neon-text text-center mb-2">GYME Login</h1>

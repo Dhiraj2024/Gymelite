@@ -108,14 +108,18 @@ const BookingForm = ({ plan, onClose, onSuccess }) => {
       );
 
       const orderId = orderRes.data.orderId;
+      const { keyId, amount, currency } = orderRes.data;
+      if (!orderId || !keyId || !amount || !currency) {
+        throw new Error("Payment setup failed. Please try again.");
+      }
       console.log("Payment order created:", orderId);
 
       // Step 3: Initialize Razorpay
       const options = {
-        key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+        key: keyId,
         order_id: orderId,
-        amount: parseInt(plan.price) * 100,
-        currency: "INR",
+        amount,
+        currency,
         name: "Gyme Fitness",
         description: `${plan.title} - ${plan.duration}`,
         prefill: {
@@ -159,10 +163,9 @@ const BookingForm = ({ plan, onClose, onSuccess }) => {
       };
 
       console.log("Razorpay Options:", {
-        key: import.meta.env.VITE_RAZORPAY_KEY_ID,
         order_id: orderId,
-        amount: parseInt(plan.price) * 100,
-        currency: "INR",
+        amount,
+        currency,
       });
 
       if (!window.Razorpay) {
@@ -173,6 +176,11 @@ const BookingForm = ({ plan, onClose, onSuccess }) => {
 
       console.log("Opening Razorpay modal...");
       const razorpay = new window.Razorpay(options);
+      razorpay.on("payment.failed", (response) => {
+        setPaymentProcessing(false);
+        const message = response.error?.description || "Please try again.";
+        alert(`Payment failed: ${message}`);
+      });
       razorpay.open();
     } catch (error) {
       const errorMsg = error.response?.data?.message || error.message || 'Unknown error';

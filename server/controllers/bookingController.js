@@ -1,10 +1,5 @@
-﻿const Booking = require('../models/Booking');
+const Booking = require('../models/Booking');
 const Razorpay = require('razorpay');
-
-const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID,
-  key_secret: process.env.RAZORPAY_KEY_SECRET,
-});
 
 const createBooking = async (req, res) => {
   try {
@@ -40,12 +35,20 @@ const createPaymentOrder = async (req, res) => {
       return res.status(400).json({ message: 'bookingId and amount are required' });
     }
 
-    if (amount <= 0 || isNaN(amount)) {
+    const numericAmount = Number(amount);
+    if (!Number.isFinite(numericAmount) || numericAmount <= 0) {
       return res.status(400).json({ message: 'Invalid amount' });
     }
 
+    const keyId = process.env.RAZORPAY_KEY_ID;
+    const keySecret = process.env.RAZORPAY_KEY_SECRET;
+    if (!keyId || !keySecret) {
+      return res.status(503).json({ message: 'Razorpay is not configured on the server' });
+    }
+
+    const razorpay = new Razorpay({ key_id: keyId, key_secret: keySecret });
     const options = {
-      amount: Math.round(amount * 100),
+      amount: Math.round(numericAmount * 100),
       currency: 'INR',
       receipt: bookingId,
       payment_capture: 1,
@@ -59,12 +62,18 @@ const createPaymentOrder = async (req, res) => {
       bookingId,
       { 
         razorpayOrderId: order.id,
-        amount: amount
+        amount: numericAmount
       },
       { new: true }
     );
 
-    res.json({ orderId: order.id, booking });
+    res.json({
+      orderId: order.id,
+      keyId,
+      amount: order.amount,
+      currency: order.currency,
+      booking,
+    });
   } catch (error) {
     console.error('Payment Order Creation Error:', error.message, error);
     res.status(500).json({ message: error.message || 'Failed to create payment order' });

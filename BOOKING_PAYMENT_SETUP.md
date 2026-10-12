@@ -51,8 +51,9 @@ This feature allows users to book fitness plans through a modal form and make pa
 #### 4. **Added Razorpay Script** (`/client/index.html`)
 - Added Razorpay Checkout script for payment processing
 
-#### 5. **Environment Variables** (`/client/.env`)
-- Added `REACT_APP_RAZORPAY_KEY_ID` for frontend
+#### 5. **Environment Variables**
+- The server uses `RAZORPAY_KEY_ID` and `RAZORPAY_KEY_SECRET` to create payment orders.
+- The server returns the matching public key ID with each order; no Razorpay key ID is required in the client environment.
 
 ## Installation & Setup
 
@@ -71,10 +72,7 @@ npm install
   RAZORPAY_KEY_ID=your_actual_key_id
   RAZORPAY_KEY_SECRET=your_actual_key_secret
   ```
-- Update `/client/.env` with:
-  ```
-  REACT_APP_RAZORPAY_KEY_ID=your_actual_key_id
-  ```
+- Restart the server after changing its Razorpay credentials.
 
 **For Testing:** (Already configured)
 - Use test keys provided in .env files

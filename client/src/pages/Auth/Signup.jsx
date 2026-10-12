@@ -8,15 +8,10 @@ const Signup = () => {
     email: "",
     password: "",
     confirmPassword: "",
-    age: "",
-    gender: "",
-    address: "",
-    passport: null,
     fitnessGoal: "",
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [passportPreview, setPassportPreview] = useState(null);
   const { signup } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -25,38 +20,35 @@ const Signup = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setFormData(prev => ({ ...prev, passport: reader.result }));
-        setPassportPreview(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+
     setLoading(true);
 
     try {
-      if (formData.password !== formData.confirmPassword) {
-        throw new Error("Passwords do not match");
-      }
       await signup(formData);
       navigate("/");
     } catch (err) {
-      setError(err.message || err.response?.data?.message || "Signup failed");
+      if (err.response?.status === 400) {
+        setError(err.response.data?.message || "Invalid registration details. Please check your input.");
+      } else if (err.response?.status === 409) {
+        setError("Email already exists. Try logging in instead.");
+      } else {
+        setError(err.response?.data?.message || err.message || "Signup failed. Please try again.");
+      }
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-dark flex items-center justify-center px-4 py-20">
+    <div className="min-h-screen bg-dark flex items-center justify-center px-4 py-8">
       <div className="max-w-md w-full">
         <div className="glass-effect p-8 rounded-lg">
           <h1 className="text-3xl font-bold neon-text text-center mb-8">GYME Sign Up</h1>
@@ -67,7 +59,7 @@ const Signup = () => {
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-5">
             <div>
               <label className="block text-sm font-medium text-gray-300 mb-2">Full Name</label>
               <input
@@ -75,8 +67,8 @@ const Signup = () => {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full bg-dark-tertiary border border-primary/30 rounded-lg px-4 py-2 text-white text-sm focus:outline-none focus:border-primary"
-                placeholder="Your Name"
+                className="w-full bg-dark-tertiary border border-primary/30 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary transition"
+                placeholder="John Doe"
                 required
               />
             </div>
@@ -88,80 +80,10 @@ const Signup = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full bg-dark-tertiary border border-primary/30 rounded-lg px-4 py-2 text-white text-sm focus:outline-none focus:border-primary"
+                className="w-full bg-dark-tertiary border border-primary/30 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary transition"
                 placeholder="your@email.com"
                 required
               />
-            </div>
-
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">Age</label>
-                <input
-                  type="number"
-                  name="age"
-                  value={formData.age}
-                  onChange={handleChange}
-                  className="w-full bg-dark-tertiary border border-primary/30 rounded-lg px-4 py-2 text-white text-sm focus:outline-none focus:border-primary"
-                  placeholder="Age"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">Gender</label>
-                <select
-                  name="gender"
-                  value={formData.gender}
-                  onChange={handleChange}
-                  className="w-full bg-dark-tertiary border border-primary/30 rounded-lg px-4 py-2 text-white text-sm focus:outline-none focus:border-primary"
-                >
-                  <option value="">Select</option>
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                </select>
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">Address</label>
-              <input
-                type="text"
-                name="address"
-                value={formData.address}
-                onChange={handleChange}
-                className="w-full bg-dark-tertiary border border-primary/30 rounded-lg px-4 py-2 text-white text-sm focus:outline-none focus:border-primary"
-                placeholder="Your Address"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">Passport Photo</label>
-              <input
-                type="file"
-                name="passport"
-                onChange={handleFileChange}
-                accept="image/*"
-                className="w-full bg-dark-tertiary border border-primary/30 rounded-lg px-4 py-2 text-white text-sm focus:outline-none focus:border-primary"
-              />
-              {passportPreview && (
-                <div className="mt-2 rounded-lg overflow-hidden h-24 w-24">
-                  <img src={passportPreview} alt="Passport Preview" className="w-full h-full object-cover" />
-                </div>
-              )}
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">Fitness Goal</label>
-              <select
-                name="fitnessGoal"
-                value={formData.fitnessGoal}
-                onChange={handleChange}
-                className="w-full bg-dark-tertiary border border-primary/30 rounded-lg px-4 py-2 text-white text-sm focus:outline-none focus:border-primary"
-              >
-                <option value="">Select Goal</option>
-                <option value="Weight Loss">Weight Loss</option>
-                <option value="Muscle Gain">Muscle Gain</option>
-                <option value="Fitness">General Fitness</option>
-              </select>
             </div>
 
             <div>
@@ -171,8 +93,8 @@ const Signup = () => {
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                className="w-full bg-dark-tertiary border border-primary/30 rounded-lg px-4 py-2 text-white text-sm focus:outline-none focus:border-primary"
-                placeholder="••••••••"
+                className="w-full bg-dark-tertiary border border-primary/30 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary transition"
+                placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"
                 required
               />
             </div>
@@ -184,23 +106,48 @@ const Signup = () => {
                 name="confirmPassword"
                 value={formData.confirmPassword}
                 onChange={handleChange}
-                className="w-full bg-dark-tertiary border border-primary/30 rounded-lg px-4 py-2 text-white text-sm focus:outline-none focus:border-primary"
-                placeholder="••••••••"
+                className="w-full bg-dark-tertiary border border-primary/30 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary transition"
+                placeholder="Re-enter your password"
                 required
               />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-2">Fitness Goal (Optional)</label>
+              <select
+                name="fitnessGoal"
+                value={formData.fitnessGoal}
+                onChange={handleChange}
+                className="w-full bg-dark-tertiary border border-primary/30 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary transition"
+              >
+                <option value="">Select Goal</option>
+                <option value="Weight Loss">Weight Loss</option>
+                <option value="Muscle Gain">Muscle Gain</option>
+                <option value="Fitness">General Fitness</option>
+              </select>
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full btn-neon font-medium mt-6"
+              className="w-full btn-neon font-medium py-3 mt-4 transition disabled:opacity-50"
             >
-              {loading ? "Creating..." : "Sign Up"}
+              {loading ? (
+                <span className="flex items-center justify-center gap-2">
+                  <span className="inline-block w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin"></span>
+                  Creating account...
+                </span>
+              ) : (
+                "Sign Up"
+              )}
             </button>
           </form>
 
-          <p className="text-center text-gray-400 text-sm mt-6">
-            Already have an account? <Link to="/login" className="text-primary hover:underline">Login</Link>
+          <p className="text-center text-gray-400 text-sm mt-8">
+            Already have an account?{" "}
+            <Link to="/login" className="text-primary hover:text-primary/80 hover:underline transition font-medium">
+              Login
+            </Link>
           </p>
         </div>
       </div>

@@ -1,8 +1,8 @@
-﻿import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import WhatsappFloat from './components/WhatsappFloat';
+import WhatsappFloat from "./components/WhatsappFloat";
 import AddProgram from "./pages/AddProgram";
 import AddPricing from "./pages/AddPricing";
 // Pages
@@ -14,14 +14,13 @@ import Testimonials from "./pages/Testimonials";
 import Pricing from "./pages/Pricing";
 import Tips from "./pages/Tips";
 import Contact from "./pages/Contact";
+import Location from "./pages/Location";
 import Login from "./pages/Auth/Login";
 import Signup from "./pages/Auth/Signup";
-
 
 // Admin
 import AdminDashboard from "./admin/AdminDashboard";
 import AddTrainer from "./pages/AddTrainer";
-
 
 function App() {
   return (
@@ -38,6 +37,7 @@ function App() {
             <Route path="/pricing" element={<Pricing />} />
             <Route path="/tips" element={<Tips />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/location" element={<Location />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/admin" element={<AdminDashboard />} />
@@ -54,4 +54,3 @@ function App() {
 }
 
 export default App;
-

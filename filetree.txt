@@ -1,0 +1,142 @@
+├── .editorconfig
+├── /.git/
+├── /.github/
+├── .gitignore
+├── /.snapshots/
+│  ├── config.json
+│  ├── readme.md
+│  └── sponsors.md
+├── /.vscode/
+│  └── settings.json
+├── BOOKING_ERROR_FIX.md
+├── BOOKING_PAYMENT_SETUP.md
+├── CHECKLIST.md
+├── /client/
+│  ├── .env
+│  ├── .gitignore
+│  ├── /.vite/
+│  │  ├── /deps/
+│  │  │  ├── axios.js
+│  │  │  ├── axios.js.map
+│  │  │  ├── chunk-5WWUZCGV.js
+│  │  │  ├── chunk-5WWUZCGV.js.map
+│  │  │  ├── chunk-EI554WWR.js
+│  │  │  ├── chunk-EI554WWR.js.map
+│  │  │  ├── chunk-XMMJGW5B.js
+│  │  │  ├── chunk-XMMJGW5B.js.map
+│  │  │  ├── package.json
+│  │  │  ├── react-dom.js
+│  │  │  ├── react-dom.js.map
+│  │  │  ├── react-dom_client.js
+│  │  │  ├── react-dom_client.js.map
+│  │  │  ├── react-icons_fa.js
+│  │  │  ├── react-icons_fa.js.map
+│  │  │  ├── react-router-dom.js
+│  │  │  ├── react-router-dom.js.map
+│  │  │  ├── react.js
+│  │  │  ├── react.js.map
+│  │  │  ├── react_jsx-dev-runtime.js
+│  │  │  ├── react_jsx-dev-runtime.js.map
+│  │  │  ├── react_jsx-runtime.js
+│  │  │  ├── react_jsx-runtime.js.map
+│  │  │  └── _metadata.json
+│  ├── /dist/
+│  │  ├── /assets/
+│  │  │  ├── index-246bed2e.css
+│  │  │  └── index-f7fa1b97.js
+│  │  └── index.html
+│  ├── index.html
+│  ├── /node_modules/
+│  ├── package-lock.json
+│  ├── package.json
+│  ├── postcss.config.js
+│  ├── /src/
+│  │  ├── /admin/
+│  │  │  ├── AdminDashboard.jsx
+│  │  │  └── MapAddressSettings.jsx
+│  │  ├── App.jsx
+│  │  ├── /assets/
+│  │  ├── /components/
+│  │  │  ├── BookingForm.jsx
+│  │  │  ├── Footer.jsx
+│  │  │  ├── Navbar.jsx
+│  │  │  └── WhatsappFloat.jsx
+│  │  ├── /context/
+│  │  │  └── AuthContext.jsx
+│  │  ├── index.css
+│  │  ├── main.jsx
+│  │  ├── /pages/
+│  │  │  ├── About.jsx
+│  │  │  ├── AddPricing.jsx
+│  │  │  ├── AddProgram.jsx
+│  │  │  ├── AddTrainer.jsx
+│  │  │  ├── /Auth/
+│  │  │  │  ├── Login.jsx
+│  │  │  │  └── Signup.jsx
+│  │  │  ├── Contact.jsx
+│  │  │  ├── Home.jsx
+│  │  │  ├── Location.jsx
+│  │  │  ├── Pricing.jsx
+│  │  │  ├── Programs.jsx
+│  │  │  ├── Testimonials.jsx
+│  │  │  ├── Tips.jsx
+│  │  │  └── Trainers.jsx
+│  │  ├── /utils/
+│  │  │  └── api.js
+│  ├── tailwind.config.js
+│  └── vite.config.js
+├── COMPLETE_GUIDE.md
+├── FEATURE_GUIDE.md
+├── IMPLEMENTATION_COMPLETE.md
+├── /node_modules/
+├── original-547268e7e42a4aeb508b1405059d8398.webp
+├── package-lock.json
+├── package.json
+├── PAYMENT_DEBUG_GUIDE.md
+├── PAYMENT_STATUS_FIX.md
+├── PROJECT_SUMMARY.md
+├── quick-start.bat
+├── RAZORPAY_FIXES.md
+├── README.md
+├── /server/
+│  ├── .env
+│  ├── /config/
+│  │  └── db.js
+│  ├── /controllers/
+│  │  ├── authController.js
+│  │  ├── bookingController.js
+│  │  ├── contactController.js
+│  │  ├── locationController.js
+│  │  ├── pricingController.js
+│  │  ├── programController.js
+│  │  ├── reviewController.js
+│  │  ├── settingController.js
+│  │  └── trainerController.js
+│  ├── makeAdmin.js
+│  ├── /middleware/
+│  │  └── auth.js
+│  ├── /models/
+│  │  ├── Booking.js
+│  │  ├── Contact.js
+│  │  ├── location.js
+│  │  ├── Pricing.js
+│  │  ├── Program.js
+│  │  ├── Review.js
+│  │  ├── Setting.js
+│  │  ├── Trainer.js
+│  │  └── User.js
+│  ├── /node_modules/
+│  ├── package-lock.json
+│  ├── package.json
+│  ├── /routes/
+│  │  ├── authRoutes.js
+│  │  ├── bookingRoutes.js
+│  │  ├── contactRoutes.js
+│  │  ├── locationRoutes.js
+│  │  ├── pricingRoutes.js
+│  │  ├── programRoutes.js
+│  │  ├── reviewRoutes.js
+│  │  ├── settingRoutes.js
+│  │  └── trainerRoutes.js
+│  └── server.js
+└── SETUP_GUIDE.md
